@@ -5295,6 +5295,15 @@
         - 'tensorflow.contrib.boosted_trees.python.ops._boosted_trees_ops'
       when: 'not win32'
 
+- module-name: 'tensorflow.contrib.eager.python.tfe' # checksum: f48edcfd
+  anti-bloat:
+    - description: 'remove unittest reference'
+      replacements_plain:
+        'from tensorflow.python.framework.test_util import run_in_graph_and_eager_modes as run_test_in_graph_and_eager_modes': 'run_test_in_graph_and_eager_modes = None'
+        ? 'from tensorflow.python.framework.test_util import run_all_in_graph_and_eager_modes as run_all_tests_in_graph_and_eager_modes'
+        : 'run_all_tests_in_graph_and_eager_modes = None"'
+      when: 'not use_unittest'
+
 - module-name: 'tensorflow.contrib.factorization.python.opso' # checksum: 280169f9
   implicit-imports:
     - depends:
