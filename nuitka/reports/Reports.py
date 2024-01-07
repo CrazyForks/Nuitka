@@ -98,7 +98,12 @@ def _getReportInputData(aborted):
     )
 
     module_usages = dict(
-        (module.getFullName(), tuple(module.getUsedModules()))
+        (
+            module.getFullName(),
+            tuple(
+                module.getUsedModules() if module.trace_collection is not None else ()
+            ),
+        )
         for module in getDoneModules()
     )
 
